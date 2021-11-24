@@ -7,8 +7,16 @@ const app = express()
 //use express routes
 app.use('/',require('./routes'));
 
-const { Sequelize } = require('sequelize');
 
+//database connection authentication
+const db = require('./config/mysql_connecton');
+db.authenticate()
+.then(()=>{
+    console.log('Connection has been established successfully.');
+})
+.catch((err)=>{
+    console.error(`Error in connecting database : ${err} `)
+})
 
 //starting express server
 app.listen(port,(err)=>{
