@@ -28,7 +28,7 @@ const User= Db.define('User', {
         allowNull:false,
         unique: true
     },
-    userName:{
+    username:{
         type:DataTypes.STRING,
         allowNull:false,
         unique: true
@@ -42,12 +42,10 @@ const User= Db.define('User', {
     }
     
 }, {
-    timestamps: true,
-    instanceMethods: {
-        verifyPassword: function(password) {
-          return bcrypt.compareSync(password, this.password);
-        }
-    }
+    timestamps: true
 });
-
+User.prototype.verifyPassword = function(password) {
+   return bcrypt.compareSync(password, this.password);
+}
+Db.sync()  
 module.exports = User;
