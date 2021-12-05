@@ -1,28 +1,24 @@
-const cookieParser = require('cookie-parser');
 const express = require('express')
-// const cookie =require('cookie-parser')
 require('dotenv').config();
-
+const cookieParser =require('cookie-parser')
 const port =process.env.PORT;
 const app = express();
 
 //middlewares
 app.use(express.json());
+app.use(express.urlencoded({extended:false})); //not needed
 app.use(cookieParser());
+
+
+
+
+
+
+//require data base models
+require('./models/index');
 
 //use express routes
 app.use('/',require('./routes'));
-
-
-//database connection authentication
-const db = require('./config/mysql_connecton');
-db.authenticate()
-.then(()=>{
-    console.log('Connection has been established successfully.');
-})
-.catch((err)=>{
-    console.error(`Error in connecting database : ${err} `)
-})
 
 //starting express server
 app.listen(port,(err)=>{
